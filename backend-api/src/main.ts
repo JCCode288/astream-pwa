@@ -31,7 +31,7 @@ async function bootstrap() {
     }),
   ]);
 
-  await app.listen(8080, async () =>
+  await app.listen(3001, async () =>
     console.log(`listening to ${await app.getUrl()}`),
   );
 }

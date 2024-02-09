@@ -15,7 +15,7 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
 
-  app.enableCors({ origin: process.env.WHITELIST, methods: ['GET'] });
+  app.enableCors({ origin: process.env.WHITELIST ?? '*', methods: ['GET'] });
   const adapter = app.get(HttpAdapterHost);
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new GlobalException(adapter));
@@ -31,8 +31,10 @@ async function bootstrap() {
     }),
   ]);
 
-  await app.listen(3001, async () =>
-    console.log(`listening to ${await app.getUrl()}`),
-  );
+  await app.listen(3001, '0.0.0.0', async (err) => {
+    if (err) return console.log(err);
+
+    console.log(`listening on ${await app.getUrl()}`);
+  });
 }
 bootstrap();

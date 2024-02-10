@@ -12,7 +12,7 @@ export default function NextButton({ func }) {
       as="button"
       fontWeight="650"
     >
-      <Text fontSize="xl" textShadow="0px 0px 7px white">
+      <Text fontSize="xl" textShadow="0px 0px 2px black">
         Next Page
       </Text>
     </Box>

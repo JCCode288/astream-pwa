@@ -1,23 +1,28 @@
-import { Box, Button, Container, HStack, Text } from "@chakra-ui/react";
+import { Box, Container } from "@chakra-ui/react";
 import { useCallback, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import {
-  episodesNextPage,
-  episodesPrevPage,
-  fetchAnimeDetail,
-} from "../../stores/details/detail.action";
+import { fetchAnimeDetail } from "../../stores/details/detail.action";
+import LoadingSpinner from "../../Components/LoadingSpinner";
+import EpisodeGrid from "./Components/EpisodeGrid";
+import EpisodeBtn from "./Components/EpisodeBtn";
+import PrevNextBtn from "./Components/PrevNextBtn";
+import DetailHero from "./Components/DetailHero";
 
 export default function DetailPage() {
-  const { id } = useParams("id");
-  const { animeDetail, loading, episodes, currentIdx } = useSelector(
-    ({ detail }) => detail
-  );
-
   const dispatcher = useDispatch();
+
+  const { id } = useParams("id");
+
+  const { loading, episodes, currentIdx } = useSelector(({ detail }) => detail);
+
   const fetchDetail = useCallback(async () => {
     await dispatcher(fetchAnimeDetail(id));
   }, [id, dispatcher]);
+
+  const currentPage = useMemo(() => {
+    return episodes[currentIdx];
+  }, [episodes, currentIdx]);
 
   const isNextPage = useMemo(() => {
     const thisPage = episodes[currentIdx]?.length;
@@ -32,30 +37,38 @@ export default function DetailPage() {
     return true;
   }, [currentIdx]);
 
-  const handleNextPage = () => {
-    dispatcher(episodesNextPage());
-  };
-  const handlePrevPage = () => {
-    dispatcher(episodesPrevPage());
-  };
-
   useEffect(() => {
     fetchDetail();
   }, [fetchDetail]);
 
-  if (loading) return <>Loading</>;
-
-  console.log({ isNextPage, isPrevPage });
+  if (loading) return <LoadingSpinner />;
 
   return (
-    <Box>
-      <Container>{JSON.stringify(animeDetail)}</Container>;
-      <Container>{JSON.stringify(episodes[currentIdx])}</Container>
-      <HStack>
-        {isPrevPage && <Button onClick={handlePrevPage}>PrevPage</Button>}
-        {isNextPage && <Button onClick={handleNextPage}>NextPage</Button>}
-        <Text>{currentIdx}</Text>
-      </HStack>
+    <Box
+      flexDir="column"
+      justifyContent="center"
+      alignItems="center"
+      maxW="100vw"
+      overflowX="hidden"
+      maxH="100%"
+    >
+      <DetailHero />
+      <Box>
+        <Container
+          display="flex"
+          bg="gray.800"
+          flexDirection="column"
+          gap="1rem"
+          py="1rem"
+        >
+          <EpisodeGrid>
+            {currentPage.map((eps) => {
+              return <EpisodeBtn eps={eps} />;
+            })}
+          </EpisodeGrid>
+        </Container>
+        <PrevNextBtn isNextPage={isNextPage} isPrevPage={isPrevPage} />
+      </Box>
     </Box>
   );
 }

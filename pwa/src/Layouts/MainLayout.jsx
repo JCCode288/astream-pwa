@@ -5,7 +5,7 @@ import Navbar from "../Components/Navbar";
 
 export default function MainLayout() {
   return (
-    <VStack bg="gray.800" color="white">
+    <VStack bg="gray.800" color="white" display="flex">
       <Navbar />
       <Box w="100%">
         <Outlet />

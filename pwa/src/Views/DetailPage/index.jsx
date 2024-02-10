@@ -3,11 +3,11 @@ import { useCallback, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchAnimeDetail } from "../../stores/details/detail.action";
-import LoadingSpinner from "../../Components/LoadingSpinner";
 import EpisodeGrid from "./Components/EpisodeGrid";
 import EpisodeBtn from "./Components/EpisodeBtn";
 import PrevNextBtn from "./Components/PrevNextBtn";
 import DetailHero from "./Components/DetailHero";
+import SplashScreen from "../Splash";
 
 export default function DetailPage() {
   const dispatcher = useDispatch();
@@ -41,7 +41,7 @@ export default function DetailPage() {
     fetchDetail();
   }, [fetchDetail]);
 
-  if (loading) return <LoadingSpinner />;
+  if (loading) return <SplashScreen />;
 
   return (
     <Box

@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAnimeStream } from "../../stores/streams/stream.action";
+import SplashScreen from "../Splash";
 
 export default function StreamPage() {
   const { episodeId } = useParams("episodeId");
@@ -29,7 +30,7 @@ export default function StreamPage() {
     fetchStreamData();
   }, [fetchStreamData]);
 
-  if (loading) return <>Loading</>;
+  if (loading) return <SplashScreen />;
 
   return <Box display="flex" maxW="100%"></Box>;
 }

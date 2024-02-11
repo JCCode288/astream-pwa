@@ -2,7 +2,6 @@ import { Box, GridItem, HStack } from "@chakra-ui/react";
 import { area } from "../../../utils/area.constant";
 import TopCard from "../Components/TopCard";
 import { useSelector } from "react-redux";
-import Reels from "../../DetailPage/Components/Reels";
 
 export default function TopSection() {
   const top = useSelector(({ animes }) => animes.topAnimes);

@@ -13,6 +13,13 @@ const routes = [
     name: "detail",
     path: "animes/:id",
     element: <DetailPage />,
+    children: [
+      {
+        name: "DetailStream",
+        path: "stream/:episodeId",
+        element: <StreamPage />,
+      },
+    ],
   },
   {
     name: "stream",

@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import LoadingSpinner from "../../Components/LoadingSpinner";
 import MainLogo from "../../Components/MainLogo";
 

@@ -12,15 +12,8 @@ export default function StreamPage() {
   const dispatcher = useDispatch();
   const name = idToName(episodeId);
 
-  const {
-    loading,
-    headers,
-    sources,
-    currentQuality,
-    download,
-    qualityMap,
-    subtitles,
-  } = useSelector(({ stream }) => stream);
+  const { loading, sources, currentQuality, qualityMap, subtitles } =
+    useSelector(({ stream }) => stream);
 
   const currentSource = useMemo(() => {
     const idx = qualityMap[currentQuality];
@@ -28,9 +21,9 @@ export default function StreamPage() {
     return src ? src : sources[0];
   }, [currentQuality, qualityMap, sources]);
 
-  const allQuality = useMemo(() => {
-    return Object.keys(qualityMap);
-  }, [qualityMap]);
+  // const allQuality = useMemo(() => {
+  //   return Object.keys(qualityMap);
+  // }, [qualityMap]);
 
   const fetchStreamData = useCallback(async () => {
     try {
@@ -49,6 +42,7 @@ export default function StreamPage() {
   return (
     <Box gap="1rem" flexDir="column" display="flex">
       <Heading
+        mx="1rem"
         px="2rem"
         py="1rem"
         border="2px"
@@ -66,19 +60,5 @@ export default function StreamPage() {
         currentQuality={currentQuality}
       />
     </Box>
-    // <>
-    //   {JSON.stringify({
-    //     loading,
-    //     headers,
-    //     sources,
-    //     currentQuality,
-    //     download,
-    //     qualityMap,
-    //     subtitles,
-    //     currentSource,
-    //     allQuality,
-    //     name,
-    //   })}
-    // </>
   );
 }

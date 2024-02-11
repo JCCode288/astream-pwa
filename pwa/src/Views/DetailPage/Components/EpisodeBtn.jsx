@@ -7,7 +7,7 @@ export default function EpisodeBtn({ eps }) {
   const epsId = useId();
   const navigator = useNavigate();
   const handleNavigate = (id) => {
-    navigator("/stream/" + id);
+    navigator("stream/" + id);
   };
 
   return (

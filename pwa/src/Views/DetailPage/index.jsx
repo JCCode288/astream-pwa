@@ -1,7 +1,7 @@
 import { Box, Container } from "@chakra-ui/react";
 import { useCallback, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import { fetchAnimeDetail } from "../../stores/details/detail.action";
 import EpisodeGrid from "./Components/EpisodeGrid";
 import EpisodeBtn from "./Components/EpisodeBtn";
@@ -69,6 +69,7 @@ export default function DetailPage() {
         </Container>
         <PrevNextBtn isNextPage={isNextPage} isPrevPage={isPrevPage} />
       </Box>
+      <Outlet />
     </Box>
   );
 }

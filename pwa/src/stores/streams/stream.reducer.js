@@ -7,6 +7,7 @@ const init = {
   currentQuality: "default",
   download: "",
   loading: true,
+  subtitles: [],
 };
 
 export default function streamReducer(state = init, { type, payload }) {

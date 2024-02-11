@@ -21,16 +21,18 @@ export function changeQuality(payload) {
   };
 }
 
-export function fetchAnimeStream(episodeId) {
+export function fetchAnimeStream(episodeId, count = 0) {
   return async (dispatcher) => {
     try {
       dispatcher(loadingChange(true));
+
+      console.log(STREAM_URL + `/${episodeId}`);
 
       const { data: animeStream } = await axios.get(
         STREAM_URL + `/${episodeId}`
       );
 
-      const { headers, sources, download } = animeStream;
+      const { headers, sources, download, subtitles } = animeStream;
 
       const qualityMap = sources.reduce((curr, next, idx) => {
         curr[next.quality] = idx;
@@ -39,12 +41,22 @@ export function fetchAnimeStream(episodeId) {
       }, {});
 
       dispatcher(
-        fetchStreamSuccess({ headers, sources, download, qualityMap })
+        fetchStreamSuccess({
+          headers,
+          sources,
+          download,
+          qualityMap,
+          subtitles,
+        })
       );
       dispatcher(loadingChange(false));
     } catch (err) {
       console.log(err);
       dispatcher(loadingChange(false));
+      if (count < 2) {
+        return await dispatcher(fetchAnimeStream(episodeId, count + 1));
+      }
+
       throw err;
     }
   };

@@ -33,8 +33,8 @@ export class AppController {
     return this.appService.getAnimeDetail(animeId);
   }
 
-  @Get('/stream/:episodeId')
-  async getAnimeStream(@Param('episodeId') episodeId: string) {
+  @Get('/stream')
+  async getAnimeStream(@Query('eps') episodeId: string) {
     if (!episodeId) {
       throw new BadRequestException('No episode ID provided');
     }

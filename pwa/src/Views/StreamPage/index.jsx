@@ -4,18 +4,28 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAnimeStream } from "../../stores/streams/stream.action";
 import SplashScreen from "../Splash";
+import StreamPlayer from "./Components/StreamPlayer";
+import idToName from "../../utils/id-to-name";
 
 export default function StreamPage() {
   const { episodeId } = useParams("episodeId");
   const dispatcher = useDispatch();
+  const name = idToName(episodeId);
 
-  const { loading, headers, sources, currentQuality, download, qualityMap } =
-    useSelector(({ stream }) => stream);
+  const {
+    loading,
+    headers,
+    sources,
+    currentQuality,
+    download,
+    qualityMap,
+    subtitles,
+  } = useSelector(({ stream }) => stream);
 
   const currentSource = useMemo(() => {
     const idx = qualityMap[currentQuality];
-
-    return sources[idx];
+    const src = sources[idx];
+    return src ? src : sources[0];
   }, [currentQuality, qualityMap, sources]);
 
   const allQuality = useMemo(() => {
@@ -23,7 +33,11 @@ export default function StreamPage() {
   }, [qualityMap]);
 
   const fetchStreamData = useCallback(async () => {
-    await dispatcher(fetchAnimeStream(episodeId));
+    try {
+      await dispatcher(fetchAnimeStream(episodeId));
+    } catch (err) {
+      console.log(err.response.data);
+    }
   }, [episodeId, dispatcher]);
 
   useEffect(() => {
@@ -32,5 +46,25 @@ export default function StreamPage() {
 
   if (loading) return <SplashScreen />;
 
-  return <Box display="flex" maxW="100%"></Box>;
+  return (
+    // <StreamPlayer
+    //   subs={subtitles}
+    //   currentSource={currentSource}
+    //   currentQuality={currentQuality}
+    // />
+    <>
+      {JSON.stringify({
+        loading,
+        headers,
+        sources,
+        currentQuality,
+        download,
+        qualityMap,
+        subtitles,
+        currentSource,
+        allQuality,
+        name,
+      })}
+    </>
+  );
 }

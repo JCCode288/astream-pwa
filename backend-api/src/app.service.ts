@@ -105,10 +105,13 @@ export class AppService {
 
       const animeSource = await this.animeProvider.fetchEpisodeSources(epsId);
 
-      await this.cacheService.setCache(key, animeSource);
+      if (animeSource.sources.length) {
+        await this.cacheService.setCache(key, animeSource);
+      }
 
       return animeSource;
     } catch (err) {
+      console.log(err);
       throw new AnimeException({
         message: err?.message ?? err,
         status: err?.status,

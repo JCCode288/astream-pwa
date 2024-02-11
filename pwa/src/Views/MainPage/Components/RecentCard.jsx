@@ -24,7 +24,7 @@ export default function RecentCard({ anime }) {
         as="a"
         background={`url(${anime.image}) center/cover no-repeat`}
         justifyContent="center"
-        boxSize={{ base: "100%", md: "15.7rem" }}
+        boxSize={{ base: "100%", md: "14rem" }}
         color="gray.900"
         display="flex"
         alignItems="center"
@@ -37,14 +37,16 @@ export default function RecentCard({ anime }) {
           alignItems="center"
           justifyContent="center"
           display="flex"
-          whiteSpace="pre-wrap"
+          whiteSpace="pretty"
           zIndex={2}
           p="0.5rem"
           textShadow="0px 0px 5px black"
           _groupHover={{
-            backdropFilter: "blur(2px)",
-            fontStyle: "800",
-            fontSize: "1.3rem",
+            base: {
+              backdropFilter: "blur(2px)",
+              fontStyle: "800",
+              fontSize: "1.3rem",
+            },
           }}
           transitionDuration="150ms"
           transitionTimingFunction="ease-in-out"

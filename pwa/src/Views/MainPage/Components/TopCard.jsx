@@ -11,7 +11,7 @@ export default function TopCard({ anime }) {
   };
   return (
     <Card
-      w="fit-content"
+      w="13rem"
       h="100%"
       overflow="hidden"
       rounded="2px"
@@ -43,8 +43,8 @@ export default function TopCard({ anime }) {
         >
           <VStack alignItems="start">
             <Text color="white">{anime.title}</Text>
-            {anime.genres.map((genre) => (
-              <Box zIndex={2}>
+            {anime.genres.map((genre, idx) => (
+              <Box zIndex={2} key={idx}>
                 <Text fontSize="sm" color="white">
                   {genre}
                 </Text>

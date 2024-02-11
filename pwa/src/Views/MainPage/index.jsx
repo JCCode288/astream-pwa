@@ -1,20 +1,15 @@
 import { Grid } from "@chakra-ui/react";
 import { area } from "../../utils/area.constant";
 import { useSelector } from "react-redux";
-import RecentSection from "./Sections/RecentSection";
-import TopSection from "./Sections/TopSection";
-import SearchSection from "./Sections/SearchSection";
-import PopularSection from "./Sections/PopularSection";
+import { lazy } from "react";
+import { Suspense } from "react";
+import LoadingSpinner from "../../Components/LoadingSpinner";
 
 export default function MainPage() {
-  const { recent, top, ip } = useSelector(({ app, animes }) => {
-    return {
-      recent: animes.recentAnimes,
-      top: animes.topAnimes,
-      ip: app.ip,
-      popular: [],
-    };
-  });
+  const TopSection = lazy(() => import("./Sections/TopSection"));
+  const RecentSection = lazy(() => import("./Sections/RecentSection"));
+  const PopularSection = lazy(() => import("./Sections/PopularSection"));
+  const SearchSection = lazy(() => import("./Sections/SearchSection"));
 
   return (
     <Grid
@@ -39,10 +34,18 @@ export default function MainPage() {
       templateColumns={{ base: "1fr", md: "repeat(3, 1fr)" }}
       gridGap="0.2rem"
     >
-      <TopSection top={top} />
-      <PopularSection />
-      <RecentSection recent={recent} />
-      <SearchSection />
+      <Suspense fallback={<LoadingSpinner />}>
+        <TopSection />
+      </Suspense>
+      <Suspense fallback={<LoadingSpinner />}>
+        <PopularSection />
+      </Suspense>
+      <Suspense fallback={<LoadingSpinner />}>
+        <RecentSection />
+      </Suspense>
+      <Suspense fallback={<LoadingSpinner />}>
+        <SearchSection />
+      </Suspense>
     </Grid>
   );
 }

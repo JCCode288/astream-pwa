@@ -139,4 +139,15 @@ export class AppService {
       });
     }
   }
+
+  searchAnimes(query: string, page = 1) {
+    try {
+      return this.animeProvider.search(query, page);
+    } catch (err) {
+      throw new AnimeException({
+        message: err?.message ?? err,
+        status: err?.status,
+      });
+    }
+  }
 }

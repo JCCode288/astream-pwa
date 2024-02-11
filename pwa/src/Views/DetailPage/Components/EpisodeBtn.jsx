@@ -11,8 +11,14 @@ export default function EpisodeBtn({ eps }) {
   };
 
   return (
-    <Button onClick={() => handleNavigate(eps.id)} key={epsId} p="0.25rem">
-      <Text whiteSpace="pre-line">{idToName(eps.id)}</Text>
+    <Button
+      display="flex"
+      h="fit-content"
+      onClick={() => handleNavigate(eps.id)}
+      key={epsId}
+      p="0.25rem"
+    >
+      <Text whiteSpace="pre-wrap">{idToName(eps.id)}</Text>
     </Button>
   );
 }

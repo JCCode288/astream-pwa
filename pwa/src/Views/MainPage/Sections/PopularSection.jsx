@@ -4,7 +4,8 @@ import { area } from "../../../utils/area.constant";
 export default function PopularSection() {
   return (
     <GridItem bg="red.500" area={area.popular}>
-      POPULAR
+      This section is under construction. It will be used to determine the
+      popular anime in this website
     </GridItem>
   );
 }

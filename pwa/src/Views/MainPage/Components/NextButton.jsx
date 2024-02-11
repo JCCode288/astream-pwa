@@ -11,6 +11,16 @@ export default function NextButton({ func }) {
       justifyContent="center"
       as="button"
       fontWeight="650"
+      _active={{
+        bg: "white",
+        color: "black",
+      }}
+      _hover={{
+        bg: "white",
+        color: "black",
+      }}
+      transitionDuration="150ms"
+      transitionTimingFunction="linear"
     >
       <Text fontSize="xl" textShadow="0px 0px 2px black">
         Next Page

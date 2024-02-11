@@ -22,11 +22,6 @@ const routes = [
     ],
   },
   {
-    name: "stream",
-    path: "stream/:episodeId",
-    element: <StreamPage />,
-  },
-  {
     name: "genre",
     path: "genres/:genre",
     element: <GenrePage />,

@@ -2,10 +2,21 @@ import { Box, Grid, GridItem } from "@chakra-ui/react";
 import RecentCard from "../Components/RecentCard";
 import { area } from "../../../utils/area.constant";
 import NextButton from "../Components/NextButton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchNextPage } from "../../../stores/animes/animes.action";
 
 export default function RecentSection() {
+  const dispatcher = useDispatch();
   const recent = useSelector(({ animes }) => animes.recentAnimes);
+
+  const handleNextRecent = async () => {
+    try {
+      await dispatcher(fetchNextPage());
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <GridItem area={area.recent} overflowY="auto">
       <Grid
@@ -26,7 +37,7 @@ export default function RecentSection() {
             <RecentCard anime={anime} />
           </Box>
         ))}
-        <NextButton />
+        <NextButton func={handleNextRecent} />
       </Grid>
     </GridItem>
   );

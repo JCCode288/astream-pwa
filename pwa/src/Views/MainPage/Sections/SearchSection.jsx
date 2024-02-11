@@ -2,8 +2,14 @@ import { GridItem, IconButton, Input } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import { area } from "../../../utils/area.constant";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchSearchAnimes } from "../../../stores/animes/animes.action";
+import AnimeStack from "../Components/AnimeStack";
 
 export default function SearchSection() {
+  const dispatcher = useDispatch();
+  const { searchedAnimes, searchNext } = useSelector(({ animes }) => animes);
+
   const [query, setQuery] = useState("");
 
   const handleChange = (e) => {
@@ -11,10 +17,24 @@ export default function SearchSection() {
 
     setQuery(() => value);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(query);
+    try {
+      await dispatcher(fetchSearchAnimes(query));
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  const handleNext = () => {
+    try {
+      alert("next called");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  console.log({ searchedAnimes, searchNext });
 
   return (
     <GridItem
@@ -26,8 +46,9 @@ export default function SearchSection() {
     >
       <Input
         onChange={handleChange}
-        placeholder="Search Anime Title"
+        placeholder="Search Anime Title here"
         bg="white"
+        color="gray.800"
         rounded="sm"
       />
       <IconButton

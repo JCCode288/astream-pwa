@@ -19,9 +19,23 @@ export default function Navbar() {
       zIndex={4}
       py="0.3rem"
     >
-      <Link to="/">
-        <MainLogo size="48" />
-      </Link>
+      <Box
+        border="1px"
+        padding="0.1rem"
+        rounded="2px"
+        borderColor="green.300"
+        shadow="3px 3px 3px green"
+        _hover={{
+          borderColor: "green.500",
+          shadow: "3px 3px 3px lime",
+        }}
+        _
+        transitionDuration="150ms"
+      >
+        <Link to="/">
+          <MainLogo size="48" />
+        </Link>
+      </Box>
     </Box>
   );
 }

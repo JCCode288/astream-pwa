@@ -30,7 +30,12 @@ export default function RecentCard({ anime }) {
         alignItems="center"
       >
         <Heading
-          onClick={() => handleRoute({ id: anime.episodeId, to: "stream" })}
+          onClick={() =>
+            handleRoute({
+              id: anime.episodeId,
+              to: `animes/${anime.id}/stream`,
+            })
+          }
           size="md"
           w="100%"
           h="100%"

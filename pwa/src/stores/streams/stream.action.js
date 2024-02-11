@@ -26,10 +26,8 @@ export function fetchAnimeStream(episodeId, count = 0) {
     try {
       dispatcher(loadingChange(true));
 
-      console.log(STREAM_URL + `/${episodeId}`);
-
       const { data: animeStream } = await axios.get(
-        STREAM_URL + `/${episodeId}`
+        STREAM_URL + `?eps=${episodeId}`
       );
 
       const { headers, sources, download, subtitles } = animeStream;

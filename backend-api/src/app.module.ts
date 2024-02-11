@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 const configs = [
   ConfigModule.forRoot({
     isGlobal: true,
+    cache: true,
   }),
 ];
 

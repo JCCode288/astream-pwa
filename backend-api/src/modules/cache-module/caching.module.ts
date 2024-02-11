@@ -6,7 +6,8 @@ import { CachingService } from './caching.service';
 @Module({
   imports: [
     CacheModule.register({
-      max: 1000,
+      max: 100,
+      ttl: 600000, // 10 mins
     }),
   ],
   providers: [CachingService],

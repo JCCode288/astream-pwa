@@ -101,8 +101,6 @@ export class AppService {
 
       const cached = await this.cacheService.getCache(key);
 
-      console.log({ epsId, cached });
-
       if (cached) return cached;
 
       const animeSource = await this.animeProvider.fetchEpisodeSources(epsId);

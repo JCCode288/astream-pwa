@@ -1,4 +1,4 @@
-import { Box, Container } from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 import { useCallback, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -47,24 +47,38 @@ export default function StreamPage() {
   if (loading) return <SplashScreen />;
 
   return (
-    // <StreamPlayer
-    //   subs={subtitles}
-    //   currentSource={currentSource}
-    //   currentQuality={currentQuality}
-    // />
-    <>
-      {JSON.stringify({
-        loading,
-        headers,
-        sources,
-        currentQuality,
-        download,
-        qualityMap,
-        subtitles,
-        currentSource,
-        allQuality,
-        name,
-      })}
-    </>
+    <Box gap="1rem" flexDir="column" display="flex">
+      <Heading
+        px="2rem"
+        py="1rem"
+        border="2px"
+        mt="0.2rem"
+        borderColor="green.500"
+        rounded="4px"
+        maxW="fit-content"
+        fontWeight="semibold"
+      >
+        {name}
+      </Heading>
+      <StreamPlayer
+        subs={subtitles}
+        currentSource={currentSource}
+        currentQuality={currentQuality}
+      />
+    </Box>
+    // <>
+    //   {JSON.stringify({
+    //     loading,
+    //     headers,
+    //     sources,
+    //     currentQuality,
+    //     download,
+    //     qualityMap,
+    //     subtitles,
+    //     currentSource,
+    //     allQuality,
+    //     name,
+    //   })}
+    // </>
   );
 }

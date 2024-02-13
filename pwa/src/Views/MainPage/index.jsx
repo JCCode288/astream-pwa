@@ -1,6 +1,5 @@
 import { Grid } from "@chakra-ui/react";
 import { area } from "../../utils/area.constant";
-import { useSelector } from "react-redux";
 import { lazy } from "react";
 import { Suspense } from "react";
 import LoadingSpinner from "../../Components/LoadingSpinner";

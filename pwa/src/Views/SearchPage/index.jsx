@@ -32,7 +32,7 @@ export default function SearchPage() {
     fetchSearch().then(() =>
       stackRef.current.scrollIntoView({ behavior: "smooth" })
     );
-  }, [search]);
+  }, [search, fetchSearch]);
 
   if (loading) return <SplashScreen />;
 

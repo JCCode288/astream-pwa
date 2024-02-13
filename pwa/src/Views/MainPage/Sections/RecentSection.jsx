@@ -1,7 +1,7 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import RecentCard from "../Components/RecentCard";
 import { area } from "../../../utils/area.constant";
-import NextButton from "../Components/NextButton";
+import NextButton from "../../../Components/NextButton";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchNextPage } from "../../../stores/animes/animes.action";
 

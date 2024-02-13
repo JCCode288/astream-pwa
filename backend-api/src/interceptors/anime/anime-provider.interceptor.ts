@@ -19,7 +19,8 @@ export class AnimeProviderInterceptor implements NestInterceptor {
 
   private async trackAnimes(body: any, req: Request) {
     try {
-      console.log({ body, req }, '<<<<<<<<<< RESPONSE');
+      const headers = req.headers['x-ip'];
+      console.log({ body, headers }, '<<<<<<<<<< RESPONSE');
     } catch (err) {
       console.log(err, '<<<<<<<<< HANDLE RES ERR');
       throw err;

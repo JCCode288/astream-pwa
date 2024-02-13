@@ -171,11 +171,7 @@ export function fetchSearchAnimes(q) {
     try {
       dispatcher(loadingChange(true));
 
-      const { data: searched } = await axios.get(BASE_URL + "/search", {
-        params: {
-          q,
-        },
-      });
+      const { data: searched } = await axios.get(BASE_URL + "/search?q=" + q);
 
       const { hasNextPage, results: searchedAnimes } = searched;
 

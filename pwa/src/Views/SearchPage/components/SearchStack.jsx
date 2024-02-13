@@ -1,8 +1,13 @@
 import { Box, HStack } from "@chakra-ui/react";
-import TopCard from "./TopCard";
 import NextButton from "../../../Components/NextButton";
+import SearchCard from "./SearchCard";
+import { useNavigate } from "react-router-dom";
 
-export default function AnimeStack({ animes, func, isNext = true }) {
+export default function SearchStack({ animes, isNext }) {
+  const navigator = useNavigate();
+  const handleNavigate = (id) => {
+    navigator("/animes/" + id);
+  };
   return (
     <HStack zIndex="-1" display="flex">
       {animes.map((anime) => (
@@ -13,7 +18,7 @@ export default function AnimeStack({ animes, func, isNext = true }) {
           display="flex"
           justifyContent="center"
         >
-          <TopCard anime={anime} />
+          <SearchCard anime={anime} />
         </Box>
       ))}
 
@@ -23,7 +28,7 @@ export default function AnimeStack({ animes, func, isNext = true }) {
         display="flex"
         justifyContent="center"
       >
-        {isNext && <NextButton func={func} />}
+        {isNext && <NextButton func={() => handleNavigate("")} />}
       </Box>
     </HStack>
   );

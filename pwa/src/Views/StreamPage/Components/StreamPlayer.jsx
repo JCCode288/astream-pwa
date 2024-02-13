@@ -4,9 +4,7 @@ import Hls from "hls.js";
 import { AspectRatio, Box } from "@chakra-ui/react";
 
 export default function StreamPlayer({ currentSource, subs, currentQuality }) {
-  console.log({ currentSource, subs, currentQuality });
-
-  const [uri] = useState(currentSource.url ?? null);
+  const [uri] = useState(currentSource?.url ?? null);
 
   let options = {
     container: ".artplayer-app",

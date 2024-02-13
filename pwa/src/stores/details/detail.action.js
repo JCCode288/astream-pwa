@@ -47,11 +47,17 @@ export function episodesPrevPage() {
   };
 }
 export function fetchAnimeDetail(id) {
-  return async (dispatcher) => {
+  return async (dispatcher, store) => {
     try {
       dispatcher(loadingChange(true));
 
-      const { data: animeDetail } = await axios.get(DETAIL_URL + `/${id}`);
+      const { app } = store();
+
+      const { data: animeDetail } = await axios.get(DETAIL_URL + `/${id}`, {
+        headers: {
+          "x-ip": app.ip,
+        },
+      });
 
       const { episodes: allEps } = animeDetail;
 

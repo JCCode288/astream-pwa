@@ -1,25 +1,24 @@
-import { Box, GridItem, HStack } from "@chakra-ui/react";
+import { GridItem } from "@chakra-ui/react";
 import { area } from "../../../utils/area.constant";
-import TopCard from "../Components/TopCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchNextPage } from "../../../stores/animes/animes.action";
+import AnimeStack from "../Components/AnimeStack";
 
 export default function TopSection() {
+  const dispatcher = useDispatch();
+
+  const handleTopNextPage = async () => {
+    try {
+      await dispatcher(fetchNextPage("top"));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const top = useSelector(({ animes }) => animes.topAnimes);
   return (
     <GridItem area={area.top} overflowX="auto">
-      <HStack zIndex="-1" display="flex">
-        {top.map((anime) => (
-          <Box
-            key={anime.id}
-            width={{ base: "12rem", md: "100%" }}
-            height="15rem"
-            display="flex"
-            justifyContent="center"
-          >
-            <TopCard anime={anime} />
-          </Box>
-        ))}
-      </HStack>
+      <AnimeStack func={handleTopNextPage} animes={top} />
     </GridItem>
   );
 }

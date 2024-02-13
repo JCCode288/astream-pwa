@@ -2,8 +2,10 @@ import { GridItem, IconButton, Input } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import { area } from "../../../utils/area.constant";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function SearchSection() {
+  const navigator = useNavigate();
   const [query, setQuery] = useState("");
 
   const handleChange = (e) => {
@@ -11,9 +13,17 @@ export default function SearchSection() {
 
     setQuery(() => value);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(query);
+    try {
+      if (query && query.length) {
+        return navigator("/search?query=" + query);
+      }
+
+      return navigator("/");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -26,8 +36,9 @@ export default function SearchSection() {
     >
       <Input
         onChange={handleChange}
-        placeholder="Search Anime Title"
+        placeholder="Search Anime Title here"
         bg="white"
+        color="gray.800"
         rounded="sm"
       />
       <IconButton

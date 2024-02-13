@@ -4,6 +4,7 @@ const cache_keys = {
   DETAIL: 'DETAIL:ANIMES',
   STREAM: 'STREAM:ANIMES',
   GENRES: 'GENRES:ANIMES',
+  SEARCH: 'SEARCH:ANIMES',
 } as const;
 
 type CacheType = keyof typeof cache_keys;

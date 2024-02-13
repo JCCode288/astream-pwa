@@ -15,7 +15,11 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
 
-  app.enableCors({ origin: process.env.WHITELIST ?? '*', methods: ['GET'] });
+  app.enableCors({
+    origin: process.env.WHITELIST,
+    methods: ['GET'],
+    allowedHeaders: ['x-ip'],
+  });
   const adapter = app.get(HttpAdapterHost);
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new GlobalException(adapter));

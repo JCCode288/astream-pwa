@@ -32,7 +32,7 @@ function ArtPlayer({ option, getInstance, ...rest }) {
     };
   }, [getInstance, option]);
 
-  return <Box ref={artRef} {...rest} rounded="sm" />;
+  return <Box ref={artRef} {...rest} rounded="sm" zIndex={1} />;
 }
 
 export default ArtPlayer;

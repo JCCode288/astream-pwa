@@ -4,8 +4,10 @@ import {
   Get,
   Param,
   Query,
+  UseInterceptors,
 } from '@nestjs/common';
 import { AppService } from './app.service';
+import { AnimeProviderInterceptor } from './interceptors/anime/anime-provider.interceptor';
 
 @Controller()
 export class AppController {
@@ -25,6 +27,7 @@ export class AppController {
   }
 
   @Get('/detail/:id')
+  @UseInterceptors(AnimeProviderInterceptor)
   async getDetailPage(@Param('id') animeId: string) {
     if (!animeId) {
       throw new BadRequestException('No anime ID provided');
@@ -40,5 +43,21 @@ export class AppController {
     }
 
     return this.appService.getAnimeSource(episodeId);
+  }
+
+  @Get('/search')
+  async getAnimeSearch(
+    @Query('q') query: string,
+    @Query('page') page?: string,
+  ) {
+    if (!query) {
+      throw new BadRequestException('No query provided');
+    }
+
+    let numPage = +page;
+
+    if (isNaN(numPage)) numPage = 1;
+
+    return this.appService.searchAnimes(query, numPage);
   }
 }

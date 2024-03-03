@@ -7,8 +7,8 @@ import {
 } from "./action.type";
 
 const init = {
-  animeDetail: {},
-  episodes: [],
+  animeDetail: null,
+  episodes: null,
   currentIdx: 0,
   loading: true,
 };

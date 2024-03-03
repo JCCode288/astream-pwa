@@ -21,21 +21,17 @@ export default function StreamPage() {
     return src ? src : sources[0];
   }, [currentQuality, qualityMap, sources]);
 
-  // const allQuality = useMemo(() => {
-  //   return Object.keys(qualityMap);
-  // }, [qualityMap]);
-
-  const fetchStreamData = useCallback(async () => {
+  const fetchStream = useCallback(async () => {
     try {
       await dispatcher(fetchAnimeStream(episodeId));
     } catch (err) {
       console.log(err.response.data);
     }
-  }, [episodeId, dispatcher]);
+  }, [dispatcher, episodeId]);
 
   useEffect(() => {
-    fetchStreamData();
-  }, [fetchStreamData]);
+    fetchStream();
+  }, [fetchStream]);
 
   if (loading) return <SplashScreen />;
 

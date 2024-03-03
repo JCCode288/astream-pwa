@@ -38,7 +38,12 @@ export default function SearchPage() {
 
   return (
     <Box my="1rem" overflowX="auto" ref={stackRef}>
-      <SearchStack animes={searchedAnimes} isNext={searchNext} />
+      {(!searchedAnimes || !searchedAnimes.length) && (
+        <Box>No animes found. UwU</Box>
+      )}
+      {searchedAnimes && searchedAnimes.length && (
+        <SearchStack animes={searchedAnimes} isNext={searchNext} />
+      )}
     </Box>
   );
 }

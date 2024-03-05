@@ -106,8 +106,6 @@ export function fetchMain() {
         data: { recentAnimes, topAnimes },
       } = await axios.get(ANIME_URL + "/main");
 
-      console.log(recentAnimes, topAnimes);
-
       const animesUnavailable =
         !recentAnimes ||
         !topAnimes ||

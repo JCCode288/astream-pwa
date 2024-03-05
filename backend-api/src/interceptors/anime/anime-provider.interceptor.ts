@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import { Observable, tap } from 'rxjs';
-import { RecordsService } from 'src/modules/records/records.service';
+import { RecordsService } from '../../modules/records/records.service';
 
 @Injectable()
 export class AnimeProviderInterceptor implements NestInterceptor {
@@ -17,6 +17,7 @@ export class AnimeProviderInterceptor implements NestInterceptor {
     next: CallHandler,
   ): Promise<Observable<any>> {
     const req = ctx.switchToHttp().getRequest();
+
     return next.handle().pipe(tap((resBody) => this.trackAnimes(resBody, req)));
   }
 

@@ -1,7 +1,7 @@
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Inject, Injectable } from '@nestjs/common';
 import { Cache } from 'cache-manager';
-import cache_ttl from 'src/utils/cache.ttl';
+import cache_ttl from '../../utils/cache.ttl';
 
 @Injectable()
 export class CachingService {

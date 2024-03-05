@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { AnimeProviderService } from './modules/anime-provider/anime-provider.service';
 import { AnimeException } from './exceptions/anime.exception';
 import cache_keys from './utils/cache.keys';
 import { CachingService } from './modules/cache-module/caching.service';
 import { IAnimeResult, ISearch } from '@consumet/extensions';
+import { AnimeProviderService } from './modules/anime-provider/anime-provider.service';
 
 export interface IMainPagination {
   recent?: number;
@@ -19,9 +19,9 @@ export class AppService {
 
   getMain({ recent, top }: IMainPagination) {
     try {
-      console.log({ recent, top });
       return Promise.all([this.getRecent(recent), this.getTop(top)]);
     } catch (err) {
+      console.log(err);
       throw new AnimeException({
         message: err?.message ?? err,
         status: err?.status,

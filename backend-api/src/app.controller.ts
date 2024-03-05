@@ -60,4 +60,9 @@ export class AppController {
 
     return this.appService.searchAnimes(query, numPage);
   }
+
+  @Get('/popular')
+  async getPopular(@Query('limit') limit?: string) {
+    return this.appService.getPopularAnime(limit);
+  }
 }

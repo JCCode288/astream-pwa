@@ -4,6 +4,8 @@ import cache_keys from './utils/cache.keys';
 import { CachingService } from './modules/cache-module/caching.service';
 import { IAnimeResult, ISearch } from '@consumet/extensions';
 import { AnimeProviderService } from './modules/anime-provider/anime-provider.service';
+import { RecordsService } from './modules/records/records.service';
+import { MongooseError } from 'mongoose';
 
 export interface IMainPagination {
   recent?: number;
@@ -15,6 +17,7 @@ export class AppService {
   constructor(
     private readonly cacheService: CachingService,
     private readonly animeProvider: AnimeProviderService,
+    private readonly recordService: RecordsService,
   ) {}
 
   getMain({ recent, top }: IMainPagination) {
@@ -148,6 +151,28 @@ export class AppService {
         message: err?.message ?? err,
         status: err?.status,
       });
+    }
+  }
+
+  async getPopularAnime(limit) {
+    if (limit) {
+      limit = isNaN(+limit) ? null : +limit;
+    }
+
+    try {
+      const popularAnimes = await this.recordService.getPopular(limit);
+
+      if (!popularAnimes.length) {
+        throw new MongooseError(
+          'Something happened on connection to database.',
+        );
+      }
+
+      return popularAnimes.flat();
+    } catch (err) {
+      console.log(err);
+
+      throw err;
     }
   }
 }

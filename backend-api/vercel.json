@@ -6,5 +6,15 @@
       "use": "@vercel/node"
     }
   ],
-  "routes": [{ "src": "/(.*)", "dest": "dist/main.js", "methods": ["GET"] }]
+  "rewrites": [{ "source": "/(.*)", "destination": "dist/main.js" }],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [{ "key": "Access-Control-Allow-Origin", "value": "*" }]
+    },
+    {
+      "source": "/astream-pwa.vercel.app/(.*)",
+      "headers": [{ "key": "Access-Control-Allow-Origin", "value": "*" }]
+    }
+  ]
 }

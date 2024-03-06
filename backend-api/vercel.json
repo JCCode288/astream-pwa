@@ -10,11 +10,15 @@
   "headers": [
     {
       "source": "/(.*)",
-      "headers": [{ "key": "Access-Control-Allow-Origin", "value": "*" }]
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "/\\.astreamline\\./" }
+      ]
     },
     {
       "source": "/astream-pwa.vercel.app/(.*)",
-      "headers": [{ "key": "Access-Control-Allow-Origin", "value": "*" }]
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "/\\.astreamline\\./" }
+      ]
     }
   ]
 }

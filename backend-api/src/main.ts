@@ -16,7 +16,7 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: process.env.WHITELIST,
+    origin: [process.env.WHITELIST, 'http://localhost:3000'],
     methods: ['GET'],
     allowedHeaders: ['x-ip'],
   });

@@ -31,19 +31,11 @@ export class RecordsService {
         throw new NotFoundException({ msg: 'No Popular Anime Found.' });
       }
 
-      const popularIds = popularCount.map((el) => el._id);
-
-      const popularPromise = [];
-
-      for (const id of popularIds) {
-        const query = this.aniRecordModel
-          .find({ id }, { user_ip: 0 })
-          .sort({ created_at: -1 })
-          .limit(1)
-          .exec();
-
-        popularPromise.push(query);
-      }
+      const popularPromise = popularCount.map((el) =>
+        this.aniRecordModel
+          .findOne({ id: el._id }, { user_ip: 0, $sort: { created_at: -1 } })
+          .exec(),
+      );
 
       return Promise.all(popularPromise);
     } catch (err) {

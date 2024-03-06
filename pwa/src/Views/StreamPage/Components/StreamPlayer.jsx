@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import ArtPlayer from "./ArtPlayer";
 import Hls from "hls.js";
 import { AspectRatio, Box } from "@chakra-ui/react";
 
 export default function StreamPlayer({ currentSource, subs, currentQuality }) {
   const [uri] = useState(currentSource?.url ?? null);
+
+  const currentSubs = useMemo(() => {
+    if (!subs.length) return "";
+
+    return subs.find((sub) => sub.lang === "English")?.url ?? "";
+  }, [subs]);
 
   let options = {
     container: ".artplayer-app",
@@ -30,7 +36,7 @@ export default function StreamPlayer({ currentSource, subs, currentQuality }) {
     volume: 1,
     isLive: false,
     muted: false,
-    autoplay: false,
+    autoplay: true,
     autoOrientation: true,
     pip: true,
     autoSize: false,
@@ -44,7 +50,7 @@ export default function StreamPlayer({ currentSource, subs, currentQuality }) {
     fullscreen: true,
     fullscreenWeb: false,
     subtitleOffset: false,
-    miniProgressBar: true,
+    miniProgressBar: false,
     mutex: true,
     backdrop: true,
     playsInline: true,
@@ -70,7 +76,7 @@ export default function StreamPlayer({ currentSource, subs, currentQuality }) {
       column: 10,
     },
     subtitle: {
-      url: subs.length ? subs.find((sub) => sub.lang === "English")?.url : "",
+      url: currentSubs,
       type: "vtt",
       style: {
         color: "#fff",

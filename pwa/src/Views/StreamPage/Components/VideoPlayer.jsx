@@ -9,7 +9,6 @@ function VideoPlayer({ option, getInstance, ...rest }) {
     (option) => {
       const art = new Artplayer({
         ...option,
-        container: artRef.current,
       });
 
       art.on("resize", () => {
@@ -32,16 +31,26 @@ function VideoPlayer({ option, getInstance, ...rest }) {
   );
 
   useEffect(() => {
+    let art = createPlayer(option);
+
     artRef.current.scrollIntoView({ behavior: "smooth" });
 
-    const art = createPlayer(option);
-
     return () => {
-      art.destroy(true);
+      if (art && art.destroy) {
+        art.destroy(false);
+      }
     };
   }, [createPlayer, option]);
 
-  return <Box ref={artRef} {...rest} rounded="sm" zIndex={1} />;
+  return (
+    <Box
+      ref={artRef}
+      {...rest}
+      rounded="sm"
+      zIndex={1}
+      className="artplayer-app"
+    />
+  );
 }
 
 export default VideoPlayer;

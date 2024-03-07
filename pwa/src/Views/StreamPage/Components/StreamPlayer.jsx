@@ -35,7 +35,7 @@ export default function StreamPlayer({ currentSource, subs, currentQuality }) {
       volume: 1,
       isLive: false,
       muted: false,
-      autoplay: true,
+      autoplay: false,
       autoOrientation: true,
       pip: true,
       autoSize: false,

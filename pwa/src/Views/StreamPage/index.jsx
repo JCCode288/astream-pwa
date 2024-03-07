@@ -2,7 +2,10 @@ import { Box, Heading } from "@chakra-ui/react";
 import { useCallback, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAnimeStream } from "../../stores/streams/stream.action";
+import {
+  cleanStreamState,
+  fetchAnimeStream,
+} from "../../stores/streams/stream.action";
 import SplashScreen from "../Splash";
 import StreamPlayer from "./Components/StreamPlayer";
 import idToName from "../../utils/id-to-name";
@@ -18,6 +21,7 @@ export default function StreamPage() {
   const currentSource = useMemo(() => {
     const idx = qualityMap[currentQuality];
     const src = sources[idx];
+
     return src ? src : sources[0];
   }, [currentQuality, qualityMap, sources]);
 
@@ -31,9 +35,13 @@ export default function StreamPage() {
 
   useEffect(() => {
     fetchStream();
-  }, [fetchStream]);
 
-  if (loading) return <SplashScreen />;
+    return () => {
+      dispatcher(cleanStreamState());
+    };
+  }, [fetchStream, dispatcher]);
+
+  if (loading || !currentSource) return <SplashScreen />;
 
   return (
     <Box gap="1rem" flexDir="column" display="flex">

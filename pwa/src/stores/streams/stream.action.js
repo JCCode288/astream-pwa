@@ -2,6 +2,7 @@ import axios from "axios";
 import { LOADING, QUALITY, STREAM, STREAM_URL } from "./action.type";
 
 function fetchStreamSuccess(payload) {
+  console.log(payload);
   return {
     type: STREAM,
     payload,
@@ -18,6 +19,21 @@ export function changeQuality(payload) {
   return {
     type: QUALITY,
     payload,
+  };
+}
+
+export function cleanStreamState() {
+  return {
+    type: STREAM,
+    payload: {
+      headers: {},
+      sources: [],
+      qualityMap: {},
+      currentQuality: "default",
+      download: "",
+      loading: true,
+      subtitles: [],
+    },
   };
 }
 
@@ -49,7 +65,7 @@ export function fetchAnimeStream(episodeId, count = 0) {
       );
       dispatcher(loadingChange(false));
     } catch (err) {
-      console.log(err);
+      console.log(err, "<<<<<<<<<<< ANIME STREAM ERR");
       dispatcher(loadingChange(false));
       if (count < 2) {
         return await dispatcher(fetchAnimeStream(episodeId, count + 1));

@@ -4,6 +4,7 @@ import { area } from "../../../utils/area.constant";
 import NextButton from "../../../Components/NextButton";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchNextPage } from "../../../stores/animes/animes.action";
+import SectionTitle from "../Components/SectionTitle";
 
 export default function RecentSection() {
   const dispatcher = useDispatch();
@@ -18,7 +19,8 @@ export default function RecentSection() {
   };
 
   return (
-    <GridItem area={area.recent} overflowY="auto">
+    <GridItem area={area.recent} overflowY="auto" p="1rem">
+      <SectionTitle title="Recent Animes" />
       <Grid
         gridTemplateColumns={{
           base: "1fr",

@@ -2,7 +2,6 @@ import axios from "axios";
 import { LOADING, QUALITY, STREAM, STREAM_URL } from "./action.type";
 
 function fetchStreamSuccess(payload) {
-  console.log(payload);
   return {
     type: STREAM,
     payload,

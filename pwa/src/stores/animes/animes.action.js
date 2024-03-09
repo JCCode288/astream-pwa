@@ -178,8 +178,6 @@ export function fetchSearchAnimes(q) {
 
       const { hasNextPage, results: searchedAnimes } = searched;
 
-      console.log(searchedAnimes);
-
       dispatcher(fetchSearchSuccess(searchedAnimes));
       dispatcher(isSearchNextPage(hasNextPage));
 

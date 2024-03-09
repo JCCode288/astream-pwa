@@ -20,9 +20,14 @@ export default function StreamPage() {
 
   const currentSource = useMemo(() => {
     const idx = qualityMap[currentQuality];
-    const src = sources[idx];
 
-    return src ? src : sources[0];
+    const src = sources[idx];
+    if (src) return src;
+
+    let backupSrc = sources.find((el) => el.quality === "720p");
+    if (backupSrc) return backupSrc;
+
+    return sources && sources.length ? sources[0] : null;
   }, [currentQuality, qualityMap, sources]);
 
   const fetchStream = useCallback(async () => {

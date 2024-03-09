@@ -73,6 +73,7 @@ export default function StreamPlayer({ currentSource, subs, currentQuality }) {
         },
         encoding: "utf-8",
       },
+      quality: [{ default: true, html: "720p", url: currentSource?.url }],
     }),
     [currentSource, currentSubs]
   );

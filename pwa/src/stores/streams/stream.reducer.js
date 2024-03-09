@@ -11,7 +11,6 @@ const init = {
 };
 
 export default function streamReducer(state = init, { type, payload }) {
-  console.log({ type, payload }, "<<<<< REDUCER");
   switch (type) {
     case STREAM:
       const { headers, sources, download, qualityMap } = payload;

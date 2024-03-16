@@ -106,18 +106,21 @@ export function fetchMain() {
         data: { recentAnimes, topAnimes },
       } = await axios.get(ANIME_URL + "/main");
 
-      if (recentAnimes && recentAnimes.length) {
-        dispatcher(fetchRecentSuccess(recentAnimes));
-      }
-      if (topAnimes && topAnimes.length) {
-        dispatcher(fetchTopSuccess(topAnimes));
+      const animesUnavailable =
+        !recentAnimes ||
+        !topAnimes ||
+        !recentAnimes?.length ||
+        !topAnimes?.length;
+
+      if (animesUnavailable) {
+        throw new Error("Failed to get animes");
       }
 
+      dispatcher(fetchRecentSuccess(recentAnimes));
+      dispatcher(fetchTopSuccess(topAnimes));
+
       dispatcher(loadingChange(false));
-    } catch (err) {
-      dispatcher(loadingChange(false));
-      throw err;
-    }
+    } catch (err) {}
   };
 }
 
@@ -174,8 +177,6 @@ export function fetchSearchAnimes(q) {
       const { data: searched } = await axios.get(BASE_URL + "/search?q=" + q);
 
       const { hasNextPage, results: searchedAnimes } = searched;
-
-      console.log(searchedAnimes);
 
       dispatcher(fetchSearchSuccess(searchedAnimes));
       dispatcher(isSearchNextPage(hasNextPage));

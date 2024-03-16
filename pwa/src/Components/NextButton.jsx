@@ -5,7 +5,7 @@ export default function NextButton({ func }) {
     <Box
       onClick={func}
       width="100%"
-      height="13rem"
+      height="100%"
       display="flex"
       alignItems="center"
       justifyContent="center"

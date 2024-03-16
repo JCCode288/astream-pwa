@@ -2,7 +2,10 @@ import { Box, Heading } from "@chakra-ui/react";
 import { useCallback, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAnimeStream } from "../../stores/streams/stream.action";
+import {
+  cleanStreamState,
+  fetchAnimeStream,
+} from "../../stores/streams/stream.action";
 import SplashScreen from "../Splash";
 import StreamPlayer from "./Components/StreamPlayer";
 import idToName from "../../utils/id-to-name";
@@ -17,27 +20,33 @@ export default function StreamPage() {
 
   const currentSource = useMemo(() => {
     const idx = qualityMap[currentQuality];
+
     const src = sources[idx];
-    return src ? src : sources[0];
+    if (src) return src;
+
+    let backupSrc = sources.find((el) => el.quality === "720p");
+    if (backupSrc) return backupSrc;
+
+    return sources && sources.length ? sources[0] : null;
   }, [currentQuality, qualityMap, sources]);
 
-  // const allQuality = useMemo(() => {
-  //   return Object.keys(qualityMap);
-  // }, [qualityMap]);
-
-  const fetchStreamData = useCallback(async () => {
+  const fetchStream = useCallback(async () => {
     try {
       await dispatcher(fetchAnimeStream(episodeId));
     } catch (err) {
       console.log(err.response.data);
     }
-  }, [episodeId, dispatcher]);
+  }, [dispatcher, episodeId]);
 
   useEffect(() => {
-    fetchStreamData();
-  }, [fetchStreamData]);
+    fetchStream();
 
-  if (loading) return <SplashScreen />;
+    return () => {
+      dispatcher(cleanStreamState());
+    };
+  }, [fetchStream, dispatcher]);
+
+  if (loading || !currentSource) return <SplashScreen />;
 
   return (
     <Box gap="1rem" flexDir="column" display="flex">

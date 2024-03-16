@@ -12,7 +12,11 @@ function AppWrapper(WrappedApp) {
     const { loading } = useSelector(({ app }) => app);
 
     const fetchAll = useCallback(async () => {
-      await dispatcher(init());
+      try {
+        await dispatcher(init());
+      } catch (err) {
+        console.log(err);
+      }
     }, [dispatcher]);
 
     useEffect(() => {

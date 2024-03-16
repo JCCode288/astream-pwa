@@ -14,34 +14,46 @@ export default function DetailPage() {
 
   const { id } = useParams("id");
 
-  const { loading, episodes, currentIdx } = useSelector(({ detail }) => detail);
-
+  const { loading, episodes, currentIdx, animeDetail } = useSelector(
+    ({ detail }) => detail
+  );
   const fetchDetail = useCallback(async () => {
-    await dispatcher(fetchAnimeDetail(id));
-  }, [id, dispatcher]);
+    try {
+      await dispatcher(fetchAnimeDetail(id));
+    } catch (err) {
+      console.log(err);
+    }
+  }, [dispatcher, id]);
+
+  useEffect(() => {
+    fetchDetail();
+  }, []);
+
+  const isLoading = loading || !animeDetail || !episodes;
 
   const currentPage = useMemo(() => {
+    if (isLoading) {
+      return [];
+    }
     return episodes[currentIdx];
-  }, [episodes, currentIdx]);
+  }, [episodes, currentIdx, isLoading]);
 
   const isNextPage = useMemo(() => {
+    if (isLoading) return false;
+
     const thisPage = episodes[currentIdx]?.length;
     if (thisPage < 13) return false;
 
     return true;
-  }, [currentIdx, episodes]);
+  }, [currentIdx, episodes, isLoading]);
 
   const isPrevPage = useMemo(() => {
-    if (currentIdx < 1) return false;
+    if (currentIdx < 1 || isLoading) return false;
 
     return true;
-  }, [currentIdx]);
+  }, [currentIdx, isLoading]);
 
-  useEffect(() => {
-    fetchDetail();
-  }, [fetchDetail]);
-
-  if (loading) return <SplashScreen />;
+  if (isLoading) return <SplashScreen />;
 
   return (
     <Box
@@ -52,7 +64,7 @@ export default function DetailPage() {
       overflowX="hidden"
       maxH="100%"
     >
-      <DetailHero />
+      <DetailHero detail={animeDetail} />
       <Box>
         <Container
           display="flex"
@@ -63,7 +75,7 @@ export default function DetailPage() {
         >
           <EpisodeGrid>
             {currentPage.map((eps) => {
-              return <EpisodeBtn eps={eps} />;
+              return <EpisodeBtn eps={eps} key={eps.id} />;
             })}
           </EpisodeGrid>
         </Container>

@@ -1,7 +1,7 @@
 # Mono repo for astream-pwa
 ## links deployment
->> - Backend: s1.astreamline.space (whitelist: self)
->> - Frontend: astreamline.space
+>> - Backend: https://s1.astreamline.space (whitelist: self)
+>> - Frontend: https://astreamline.space
 
 **backend routes docs**
 
